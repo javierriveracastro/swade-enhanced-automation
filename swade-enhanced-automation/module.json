@@ -15,7 +15,7 @@
   ],
   "url": "https://github.com/javierriveracastro/swade-enhanced-automation",
   "manifest": "https://raw.githubusercontent.com/javierriveracastro/swade-enhanced-automation/master/swade-enhanced-automation/module.json",
-  "download": "",
+  "download": "https://github.com/javierriveracastro/swade-enhanced-automation/raw/master/swade-enhanced-automation.zip",
   "media": [
     {
       "type": "screenshot",
