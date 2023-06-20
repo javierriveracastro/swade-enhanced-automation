@@ -1,0 +1,48 @@
+{
+  "title": "Swade Enhanced Automations",
+  "description": "A module to enhance the automations in the SWADE system",
+  "version": "0.1",
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/swade-auto-init.js"
+  ],
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "media": [
+    {
+      "type": "screenshot",
+      "url": "",
+      "loop": false,
+      "flags": {}
+    }
+  ],
+  "id": "swade-enhanced-automation",
+  "authors": [
+    {
+      "name": "Javier Rivera",
+      "flags": {}
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "swade",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.301",
+    "maximum": "11"
+  }
+}
