@@ -4,4 +4,5 @@ This is a experimental module trying to add new automation options to Foundry SW
 
 ## Features
 
-* Gang-up: It adds basic gangup resolution to the system modifiers. It is based in BR2 gangup calculation, so it should be quite robust and tested. It doesn't support all the BR features, the most important missing ones are support for Formation Figther and Block edge, and the ability to configure the distance at with a token is considered to be in melee. The second one is quite important for gridless play, it will assume 1.2 units.
+* Gang-up: It adds basic gangup resolution to the system modifiers. It is based in BR2 gangup calculation, so it should be quite robust and tested. It doesn't support all the BR features.
+* Scale: Adds scale modifiers.
