@@ -10,7 +10,6 @@ export function add_modifiers(actor, skill, roll, modifiers, options) {
         const target_tokens = game.user.targets;
         if (attacking_tokens.length > 0 && target_tokens.size > 0) {
             const gangup_modifier = calculate_gangUp(attacking_tokens[0], target_tokens.first());
-            console.log(gangup_modifier);
             if (gangup_modifier > 0) {
                 modifiers.push({label: "Gang-up", value: gangup_modifier});
             }

@@ -2,5 +2,6 @@
   "I18N.MAINTAINERS": [
     "Javier Rivera"
   ],
-  "SWADE-EA.settings.gangup-distance.name": "Gangup Distance"
+  "SWADE-EA.settings.gangup-distance.name": "Gangup Distance",
+  "SWADE-EA.settings.gangup-distance.hint": "The distance at which gangup bonus is applied."
 }
