@@ -9,12 +9,17 @@ export function add_modifiers(actor, skill, roll, modifiers, options) {
         const attacking_tokens = actor.getActiveTokens();
         const target_tokens = game.user.targets;
         if (attacking_tokens.length > 0 && target_tokens.size > 0) {
-            const gangup_modifier = calculate_gangUp(attacking_tokens[0], target_tokens.first());
-            if (gangup_modifier > 0) {
-                modifiers.push({label: "Gang-up", value: gangup_modifier});
-            }
+            push_modifier(modifiers, "Gang-up", calculate_gangUp(attacking_tokens[0], target_tokens.first()));
+            push_modifier(modifiers, "Scale", calculate_scale(attacking_tokens[0], target_tokens.first()));
         }
     }
+}
+
+function push_modifier(modifiers, label, value) {
+    if (value === 0) {
+        return;
+    }
+    modifiers.push({label: label, value: value});
 }
 
 /**
@@ -122,4 +127,16 @@ function gang_up_reduction(target) {
         }
     }
     return addition;
+}
+
+function calculate_scale(attacker, target) {
+    const attacker_size = attacker.actor.system.stats.size || attacker.actor.system.size || 1;
+    const target_size = target.actor.system.stats.size || target.actor.system.size || 1;
+    console.log(target_size)
+    console.log(target.actor)
+    console.log(target.actor.calcScale(target_size))
+    if (attacker_size !== target_size) {
+        return target.actor.calcScale(target_size) - attacker.actor.calcScale(attacker_size);
+    }
+    return 0;
 }
