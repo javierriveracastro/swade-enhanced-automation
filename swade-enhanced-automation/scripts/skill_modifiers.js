@@ -13,6 +13,7 @@ export function add_modifiers(actor, skill, roll, modifiers, options) {
             push_modifier(modifiers, "Scale", calculate_scale(attacking_tokens[0], target_tokens.first()));
         }
     }
+    push_modifier(modifiers, "Armor over strength", calculate_armor_min_str(actor, skill));
 }
 
 function push_modifier(modifiers, label, value) {
@@ -132,11 +133,38 @@ function gang_up_reduction(target) {
 function calculate_scale(attacker, target) {
     const attacker_size = attacker.actor.system.stats.size || attacker.actor.system.size || 1;
     const target_size = target.actor.system.stats.size || target.actor.system.size || 1;
-    console.log(target_size)
-    console.log(target.actor)
-    console.log(target.actor.calcScale(target_size))
     if (attacker_size !== target_size) {
         return target.actor.calcScale(target_size) - attacker.actor.calcScale(attacker_size);
+    }
+    return 0;
+}
+
+function calculate_armor_min_str(actor, skill) {
+    if (skill.system.attribute !== 'agility') {
+        return 0;
+    }
+    const min_str_armors = actor.items.filter((item) =>
+       {return item.type === 'armor' && item.system.minStr && item.system.equipStatus >= 2;});
+    console.log(min_str_armors)
+    for (let armor of min_str_armors) {
+        let penalty = process_minimum_str_modifiers(armor, actor);
+        if (penalty) {
+            return penalty;
+        }
+    }
+    return 0;
+}
+
+function process_minimum_str_modifiers(item, actor) {
+    const split_min_str = item.system.minStr.split('d');
+    const min_str_die_size = parseInt(split_min_str[split_min_str.length - 1]);
+    let str_die_size = actor?.system?.attributes?.strength?.die?.sides;
+    if (actor?.system?.attributes?.strength.encumbranceSteps) {
+        str_die_size += Math.max(actor?.system?.attributes?.strength.encumbranceSteps * 2, 0);
+    }
+    if (min_str_die_size > str_die_size) {
+        // Minimum strength is not meet
+        return -Math.trunc((min_str_die_size - str_die_size) / 2);
     }
     return 0;
 }
