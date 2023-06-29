@@ -5,9 +5,12 @@ import {get_setting} from "./settings.js";
 
 export function add_modifiers(actor, skill, roll, modifiers, options) {
     const fighting_name = game.settings.get('swade', 'parryBaseSkill');
+    const target_tokens = game.user.targets;
+    if (target_tokens.size) {
+        push_modifier(modifiers, "Target Status", calculate_target_status(target_tokens.first()));
+    }
     if (skill.name === fighting_name) {
         const attacking_tokens = actor.getActiveTokens();
-        const target_tokens = game.user.targets;
         if (attacking_tokens.length > 0 && target_tokens.size > 0) {
             push_modifier(modifiers, "Gang-up", calculate_gangUp(attacking_tokens[0], target_tokens.first()));
             push_modifier(modifiers, "Scale", calculate_scale(attacking_tokens[0], target_tokens.first()));
@@ -145,7 +148,6 @@ function calculate_armor_min_str(actor, skill) {
     }
     const min_str_armors = actor.items.filter((item) =>
        {return item.type === 'armor' && item.system.minStr && item.system.equipStatus >= 2;});
-    console.log(min_str_armors)
     for (let armor of min_str_armors) {
         let penalty = process_minimum_str_modifiers(armor, actor);
         if (penalty) {
@@ -165,6 +167,13 @@ function process_minimum_str_modifiers(item, actor) {
     if (min_str_die_size > str_die_size) {
         // Minimum strength is not meet
         return -Math.trunc((min_str_die_size - str_die_size) / 2);
+    }
+    return 0;
+}
+
+function calculate_target_status(target) {
+    if (target.actor.system.status.isVulnerable || target.actor.system.status.isStunned) {
+        return 2;
     }
     return 0;
 }
