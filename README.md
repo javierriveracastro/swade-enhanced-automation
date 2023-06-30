@@ -8,3 +8,4 @@ This is a experimental module trying to add new automation options to Foundry SW
 * Scale: Adds scale modifiers.
 * Armor minimum strength over character strength.
 * Target is vulnerable or stunned.
+* Shooting weapons with higher minimum strength than the character

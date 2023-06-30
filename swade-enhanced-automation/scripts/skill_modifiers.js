@@ -16,7 +16,10 @@ export function add_modifiers(actor, skill, roll, modifiers, options) {
             push_modifier(modifiers, "Scale", calculate_scale(attacking_tokens[0], target_tokens.first()));
         }
     }
-    push_modifier(modifiers, "Armor over strength", calculate_armor_min_str(actor, skill));
+    push_modifier(modifiers, "Armor under strength", calculate_armor_min_str(actor, skill));
+    if (options.item.type === "weapon" && skill.name !== fighting_name){
+        push_modifier(modifiers, "Weapon under strength", calculate_weapon_min_strength(actor, options.item));
+    }
 }
 
 function push_modifier(modifiers, label, value) {
@@ -176,4 +179,8 @@ function calculate_target_status(target) {
         return 2;
     }
     return 0;
+}
+
+function calculate_weapon_min_strength(actor, item){
+     return process_minimum_str_modifiers(item, actor);
 }
